@@ -1,0 +1,9 @@
+<router-outlet></router-outlet>
+<div
+  *ngIf="loaderService.isLoading | async"
+  class="loader-container"
+  mode="indeterminate"
+  color="dark"
+>
+  <mat-spinner></mat-spinner>
+</div>

@@ -1,0 +1,28 @@
+<div>
+  <div class="text-center">
+    <!-- <i
+        [mat-dialog-close]="false"
+        id="close-icon"
+        class="fa fa-close mx-2 mt-1"
+        (click)="(closeDialog)"
+      ></i> -->
+    <div mat-dialog-content class="fs-6 mb-2">
+      {{ data.message }}
+    </div>
+  </div>
+  <div mat-dialog-actions class="text-center d-flex justify-content-center">
+    <button
+      class="bg-dark m-1 p-2 text-light rounded"
+      [mat-dialog-close]="false"
+    >
+      No
+    </button>
+
+    <button
+      class="bg-dark m-1 p-2 text-light rounded"
+      [mat-dialog-close]="true"
+    >
+      yes
+    </button>
+  </div>
+</div>

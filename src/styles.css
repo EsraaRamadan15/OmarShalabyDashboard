@@ -1,0 +1,43 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: monospace;
+}
+
+.error.mat-snack-bar-container {
+  color: #f8d7da;
+  background-color: #c21123;
+  border-color: #f5c6cb;
+}
+
+.success.mat-snack-bar-container {
+  color: #f8d7da;
+  background-color: green;
+  border-color: #f5c6cb;
+}
+
+.ngx-pagination {
+  padding-left: 0px !important;
+}
+
+.ngx-pagination .current,
+.btn-info {
+  background: #0d6efd !important;
+  border: transparent !important;
+  border-radius: 20px !important;
+}
+
+.ngx-pagination .current:hover {
+  background: #0d6efd !important;
+  border-radius: 20px !important;
+  border: transparent !important;
+}
+.ngx-pagination a,
+.ngx-pagination button {
+  text-decoration: none;
+}

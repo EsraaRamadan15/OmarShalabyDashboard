@@ -1,0 +1,110 @@
+<div id="content" class="bg-light card my-3 mx-4" style="min-height: 80vh">
+  <div class="pt-2 mt-2 mx-3">
+    <h3 *ngIf="!editMode">Add surah</h3>
+    <h3 *ngIf="editMode">Edit surah</h3>
+  </div>
+  <div class="container">
+    <form [formGroup]="addForm">
+      <div class="modal-body form-group">
+        <div class="position-relative">
+          <div class="mb-0 fv-row">
+            <div class="row">
+              <mat-form-field>
+                <mat-label
+                  class="col-lg-5 col-form-label required fw-bold fs-6 mb-2"
+                >
+                  English Name
+                </mat-label>
+                <span class="col-12 mb-3">
+                  <input
+                    name="nameEn"
+                    formControlName="nameEn"
+                    type="text"
+                    class="form-control form-control-lg"
+                    placeholder=" English Name"
+                    minlength="2"
+                    maxlength="151"
+                    required
+                    matInput
+                  />
+                </span>
+                <mat-error
+                  *ngIf="addForm.controls['nameEn'].errors?.['required']"
+                >
+                  English Name is required</mat-error
+                >
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <mat-form-field>
+                <mat-label
+                  class="col-lg-5 mb-2 col-form-label required fw-bold fs-6"
+                >
+                  Arabic Name
+                </mat-label>
+
+                <span class="col-12">
+                  <input
+                    name="nameAr"
+                    formControlName="nameAr"
+                    type="text"
+                    class="form-control form-control-lg"
+                    placeholder=" Arabic Name"
+                    matInput
+                    minlength="2"
+                    maxlength="151"
+                    required
+                  />
+                </span>
+                <mat-error
+                  *ngIf="addForm.controls['nameAr'].errors?.['required']"
+                >
+                  Arabic Name is required</mat-error
+                >
+              </mat-form-field>
+            </div>
+
+            <div class="row">
+              <mat-form-field>
+                <mat-label
+                  class="col-lg-5 mb-2 col-form-label required fw-bold fs-6"
+                >
+                  Sort Order
+                </mat-label>
+
+                <span class="col-12">
+                  <input
+                    name="sortOrder"
+                    formControlName="sortOrder"
+                    type="text"
+                    class="form-control form-control-lg"
+                    placeholder=" Sort Order"
+                    required
+                    matInput
+                  />
+                </span>
+                <mat-error
+                  *ngIf="addForm.controls['sortOrder'].errors?.['required']"
+                  >Sort order required</mat-error
+                >
+                <mat-error
+                  *ngIf="addForm.controls['sortOrder'].errors?.['pattern']"
+                  >Only numbers</mat-error
+                >
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-footer d-flex justify-content-end">
+        <button
+          [disabled]="!addForm.valid"
+          class="btn btn-dark m-2 p-3 fs-6 cursor-pointer"
+          (click)="addSurah()"
+        >
+          {{ editMode ? "Edit" : "Add" }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
