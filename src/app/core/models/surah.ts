@@ -3,4 +3,5 @@ export interface Surah {
   nameEn: string | null;
   nameAr: string | null;
   sortOrder: string | null;
+  fileToUpload: any;
 }

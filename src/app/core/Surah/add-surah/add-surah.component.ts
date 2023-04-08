@@ -15,6 +15,7 @@ import { SurahService } from '../services/surah-service.service';
 export class AddSurahComponent implements OnInit {
   addForm: FormGroup = new FormGroup({});
   surah = {} as Surah;
+  fileToUpload: File | null = null;
 
   @Output() refreshData: EventEmitter<any> = new EventEmitter();
   isAddMode!: boolean;
@@ -27,10 +28,9 @@ export class AddSurahComponent implements OnInit {
     private router: Router,
     private routeActivate: ActivatedRoute,
     private notificationService: ToasterNotifierService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    console.log(this.routeActivate.snapshot.url[0].path);
     if (this.routeActivate.snapshot.url[0].path == 'edit-category') {
       this.editMode = !this.editMode;
     }
@@ -39,6 +39,7 @@ export class AddSurahComponent implements OnInit {
       nameEn: this.routeActivate.snapshot.paramMap.get('nameEn'),
       nameAr: this.routeActivate.snapshot.paramMap.get('nameAr'),
       sortOrder: this.routeActivate.snapshot.paramMap.get('sortOrder'),
+      fileToUpload: this.routeActivate.snapshot.paramMap.get('fileToUpload'),
     };
 
     this.initFrom();
@@ -46,19 +47,27 @@ export class AddSurahComponent implements OnInit {
   initFrom() {
     this.addForm = new FormGroup({
       nameEn: new FormControl(this.surah.nameEn, [Validators.required]),
-
       nameAr: new FormControl(this.surah.nameAr, [Validators.required]),
-
       sortOrder: new FormControl(this.surah.sortOrder, [
         Validators.required,
         Validators.pattern('^[0-9]*$'),
       ]),
+      fileToUpload: new FormControl(this.surah.fileToUpload, [Validators.required])
     });
   }
   addSurah() {
+    const formData = new FormData();
+    formData.append('nameEn', this.addForm.value.nameEn);
+    formData.append('nameAr', this.addForm.value.nameAr);
+    formData.append('sortOrder', this.addForm.value.sortOrder);
+    // add the file to the form data only if it is not null or undefined
+    if (this.fileToUpload) {
+      formData.append('fileToUpload', this.fileToUpload.name);
+    }
+
     if (this.surah.id == null || this.surah.id == undefined) {
       this.Subscription.add(
-        this.categoryService.addCategory(this.addForm.value).subscribe(
+        this.categoryService.addCategory(formData).subscribe(
           (res: any) => {
             this.refreshData.emit(this.addForm.value);
             this.router.navigate([`dashboard/categories`]);
@@ -80,13 +89,22 @@ export class AddSurahComponent implements OnInit {
     } else {
       this.surah.nameEn = this.addForm.value.nameEn;
       this.surah.nameAr = this.addForm.value.nameAr;
-      (this.surah.sortOrder = this.addForm.value.sortOrder),
-        this.Subscription.add(
-
-        );
+      this.surah.sortOrder = this.addForm.value.sortOrder;
+      // TODO: update category with the new form data
     }
   }
 
+  handleFileInput(event: any) {
+    const files: FileList = event.target.files;
+    const file = files.item(0);
+    if (file) {
+      this.fileToUpload = file;
+      const fileToUploadControl = this.addForm.get('fileToUpload');
+      if (fileToUploadControl) { // check if the control is not null or undefined
+        fileToUploadControl.setValue(file);
+      }
+    }
+  }
   ngOnDestroy(): void {
     this.Subscription.unsubscribe();
   }

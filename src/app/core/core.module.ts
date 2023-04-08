@@ -16,6 +16,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AddDoaaComponent } from './Doaa/add-doaa/add-doaa.component';
 import { AddSurahComponent } from './Surah/add-surah/add-surah.component';
+import { SurahViewComponent } from './Surah/surah-view/surah-view.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -23,6 +24,7 @@ import { AddSurahComponent } from './Surah/add-surah/add-surah.component';
     AddSurahComponent,
     SafePipe,
     AddDoaaComponent,
+    SurahViewComponent,
   ],
   imports: [
     CommonModule,
