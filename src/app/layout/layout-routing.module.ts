@@ -1,3 +1,4 @@
+import { SurahViewComponent } from './../core/Surah/surah-view/surah-view.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -12,7 +13,10 @@ const all_routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
   },
-
+  {
+    path: 'surah',
+    component: SurahViewComponent
+  },
   {
     path: 'add-surah',
     component: AddSurahComponent,
@@ -43,4 +47,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LayoutRoutingModule {}
+export class LayoutRoutingModule { }
