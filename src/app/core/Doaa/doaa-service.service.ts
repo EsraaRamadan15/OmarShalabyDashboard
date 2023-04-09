@@ -11,7 +11,7 @@ export class DoaaService {
     Authorization: 'Bearer ' + localStorage.getItem('token'),
   });
   constructor(private http: HttpClient) {}
-  grtAllAirlines(page: number, size: number) {
+  getAllDoaas(page: number, size: number) {
     return this.http.get<Doaa>(
       `${this.baseUrl}airline/getAllAirlinesForWeb?page=${page}&size=${size}`,
       {
@@ -19,17 +19,17 @@ export class DoaaService {
       }
     );
   }
-  addAirline(body: any) {
+  addADoaa(body: any) {
     return this.http.post(`${this.baseUrl}airline/add`, body, {
       headers: this.headers,
     });
   }
-  editAirline(data: any) {
+  editDoaa(data: any) {
     return this.http.post(`${this.baseUrl}airline/edit`, data, {
       headers: this.headers,
     });
   }
-  deleteAirline(id: any) {
+  deleteDoaa(id: any) {
     return this.http.delete(`${this.baseUrl}airline/delete?id=${id}`);
   }
 }

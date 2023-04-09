@@ -6,6 +6,8 @@ import { LayoutComponent } from './layout.component';
 import { AddDoaaComponent } from '../core/Doaa/add-doaa/add-doaa.component';
 import { AddSurahComponent } from '../core/Surah/add-surah/add-surah.component';
 import { DashboardComponent } from '../core/dashboard/dashboard.component';
+import { SurahsListComponent } from '../core/Surah/surah-list/surah-list.component';
+import { DoaaListComponent } from '../core/Doaa/doaa-list/doaa-list.component';
 
 const all_routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -25,6 +27,11 @@ const all_routes: Routes = [
     path: 'edit-surah',
     component: AddSurahComponent,
   },
+  {
+
+    path: 'surahs-list',
+    component: SurahsListComponent,
+  },
 
   {
     path: 'add-doaa',
@@ -35,6 +42,11 @@ const all_routes: Routes = [
     path: 'edit-doaa',
     component: AddDoaaComponent,
   },
+  {
+
+    path: 'doaa-list',
+    component: DoaaListComponent,
+  }
 ];
 const routes: Routes = [
   {

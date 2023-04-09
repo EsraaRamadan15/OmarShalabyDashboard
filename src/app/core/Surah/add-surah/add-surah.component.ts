@@ -67,7 +67,7 @@ export class AddSurahComponent implements OnInit {
 
     if (this.surah.id == null || this.surah.id == undefined) {
       this.Subscription.add(
-        this.categoryService.addCategory(formData).subscribe(
+        this.categoryService.addSurah(formData).subscribe(
           (res: any) => {
             this.refreshData.emit(this.addForm.value);
             this.router.navigate([`dashboard/categories`]);

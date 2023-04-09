@@ -1,0 +1,53 @@
+<div id="content" class="py-2 px-3 bg-light w-100" style="min-height: 100vh">
+  <div class="pt-2 mt-2 me-3 d-flex justify-content-between">
+    <h2 class="mb-4 ms-3">Doaas</h2>
+    <button class="btn btn-dark text-white p-2 m-2" (click)="addDoaa()">
+      <i class="fa fa-plus fs-6"></i>
+      Add
+    </button>
+  </div>
+  <div class="table table-responsive table-sm px-3 py-3 shadow rounded">
+    <table class="table mb-0 bg-white w-100 rounded">
+      <thead class="bg-light">
+        <tr>
+          <th class="text-nowrap">Name</th>
+          <th class="text-nowrap">items count</th>
+          <th class="text-nowrap">View </th>
+          <th class="text-nowrap">Edit</th>
+          <th class="text-nowrap">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let doaa of doaas">
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-1">
+                <p class="fw-normal m-2">{{ doaa.name }}</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <p class="fw-normal m-2">{{ doaa.itemsCount }}</p>
+          </td>
+          <td>
+            <a style="cursor: pointer" (click)="viewDoaa(doaa.id)">
+              <i class="fa fa-eye fs-4 text-muted mx-5 mt-2"></i>
+            </a>
+          </td>
+
+          <td>
+            <a style="cursor: pointer" (click)="editDoaa(doaa)">
+              <i class="fa fa-edit fs-4 text-muted mx-2 mt-2"></i>
+            </a>
+          </td>
+
+          <td>
+            <a style="cursor: pointer" (click)="deleteDoaa(doaa.id)">
+              <i class="fa fa-trash fs-4 text-muted mx-2 mt-2"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

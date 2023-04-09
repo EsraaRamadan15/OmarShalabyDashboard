@@ -48,7 +48,7 @@ export class AddDoaaComponent implements OnInit {
   addDoaa() {
     if (this.doaa.id == null || this.doaa.id == undefined) {
       this.Subscription.add(
-        this.airlineService.addAirline(this.addForm.value).subscribe(
+        this.airlineService.addADoaa(this.addForm.value).subscribe(
           (res: any) => {
             this.doaa = res.result;
             this.router.navigate([`dashboard/airlins-list`]);
@@ -72,7 +72,7 @@ export class AddDoaaComponent implements OnInit {
     } else {
       this.doaa.name = this.addForm.value.name;
       this.Subscription.add(
-        this.airlineService.editAirline(this.doaa).subscribe(
+        this.airlineService.editDoaa(this.doaa).subscribe(
           (res: any) => {
             console.log(res);
             this.refreshData.emit(this.doaa);

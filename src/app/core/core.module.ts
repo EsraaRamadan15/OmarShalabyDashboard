@@ -17,6 +17,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AddDoaaComponent } from './Doaa/add-doaa/add-doaa.component';
 import { AddSurahComponent } from './Surah/add-surah/add-surah.component';
 import { SurahViewComponent } from './Surah/surah-view/surah-view.component';
+import { SurahsListComponent } from './Surah/surah-list/surah-list.component';
+import { DoaaListComponent } from './Doaa/doaa-list/doaa-list.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -25,6 +27,8 @@ import { SurahViewComponent } from './Surah/surah-view/surah-view.component';
     SafePipe,
     AddDoaaComponent,
     SurahViewComponent,
+    SurahsListComponent,
+    DoaaListComponent
   ],
   imports: [
     CommonModule,
