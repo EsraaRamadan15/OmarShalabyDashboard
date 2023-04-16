@@ -21,6 +21,14 @@
                   Name is required</mat-error>
               </mat-form-field>
             </div>
+            <div class="row">
+              <mat-label class="col-lg-5 mb-2 col-form-label required fw-bold fs-6">
+                Surah File
+              </mat-label>
+              <span class="col-12">
+                <input type="file" accept=".mp3" (change)="handleFileInput($event)">
+              </span>
+            </div>
           </div>
         </div>
       </div>

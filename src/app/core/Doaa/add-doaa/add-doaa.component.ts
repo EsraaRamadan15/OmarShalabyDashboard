@@ -15,6 +15,7 @@ import { DoaaService } from '../doaa-service.service';
 export class AddDoaaComponent implements OnInit {
   addForm: FormGroup = new FormGroup({});
   doaa = {} as Doaa;
+  fileToUpload: File | null = null;
 
   @Output() refreshData: EventEmitter<any> = new EventEmitter();
   isAddMode!: boolean;
@@ -36,6 +37,7 @@ export class AddDoaaComponent implements OnInit {
       id: this.roterActivate.snapshot.paramMap.get('id'),
       name: this.roterActivate.snapshot.paramMap.get('name'),
       description: 0,
+      fileToUpload: this.roterActivate.snapshot.paramMap.get('fileToUpload'),
     };
     this.initForm();
   }
@@ -43,6 +45,7 @@ export class AddDoaaComponent implements OnInit {
   initForm() {
     this.addForm = new FormGroup({
       name: new FormControl(this.doaa.name, [Validators.required]),
+      fileToUpload: new FormControl(this.doaa.fileToUpload, [Validators.required])
     });
   }
   addDoaa() {
@@ -93,6 +96,18 @@ export class AddDoaaComponent implements OnInit {
           }
         )
       );
+    }
+  }
+
+  handleFileInput(event: any) {
+    const files: FileList = event.target.files;
+    const file = files.item(0);
+    if (file) {
+      this.fileToUpload = file;
+      const fileToUploadControl = this.addForm.get('fileToUpload');
+      if (fileToUploadControl) { // check if the control is not null or undefined
+        fileToUploadControl.setValue(file);
+      }
     }
   }
   ngOnDestroy() {
