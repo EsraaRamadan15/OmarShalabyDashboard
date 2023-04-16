@@ -13,11 +13,14 @@ import { DoaaService } from '../doaa-service.service';
   styleUrls: ['./add-doaa.component.css'],
 })
 export class AddDoaaComponent implements OnInit {
-  addForm: FormGroup = new FormGroup({});
+  addForm: FormGroup = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    fileToUpload: new FormControl('', [Validators.required])
+  });
   get name() {
     return this.addForm.get('name')
   }
-  get file (){
+  get file() {
     return this.addForm.get('fileToUpload')
   }
   doaa = {} as Doaa;
@@ -28,91 +31,45 @@ export class AddDoaaComponent implements OnInit {
   Subscription: Subscription = new Subscription();
   editMode = false;
   constructor(
-    private roterActivate: ActivatedRoute,
     private airlineService: DoaaService,
     private router: Router,
-    private snackBar: MatSnackBar,
     private notificationService: ToasterNotifierService
   ) { }
 
   ngOnInit(): void {
-    if (this.roterActivate.snapshot.url[0].path == 'edit-airline') {
-      this.editMode = !this.editMode;
-    }
-    this.doaa = {
-      id: this.roterActivate.snapshot.paramMap.get('id'),
-      name:this.name?.value,
-      description: 0,
-      fileToUpload: this.roterActivate.snapshot.paramMap.get('fileToUpload'),
-    };    
-    this.initForm();
+
   }
 
-  initForm() {
-    this.addForm = new FormGroup({
-      name: new FormControl(this.doaa.name, [Validators.required]),
-      fileToUpload: new FormControl(this.doaa.fileToUpload, [Validators.required])
-    });
-  }
+
   addDoaa() {
-    if (this.doaa.id == null || this.doaa.id == undefined) {
-      const dueData = new FormData()
-      dueData.append("path",this.file?.value)
-      dueData.append('type',"due")
-      dueData.append('des',"due")
-      dueData.append('name',this.name?.value)
-      this.Subscription.add(
-        this.airlineService.addADoaa(dueData).subscribe(
-          (res: any) => {
-            this.doaa = res.result;
-            this.router.navigate([`dashboard/airlins-list`]);
-            this.notificationService.showNotification(
-              'Airline Added Successfuly',
-              'ok',
-              'success'
-            );
-          },
-          (err) => {
-            this.notificationService.showNotification(
-              'Airline Added Faild',
-              'ok',
-              'error'
-            );
+    const dueData = new FormData()
+    dueData.append("path", this.file?.value)
+    dueData.append('type', "due")
+    dueData.append('des', "due")
+    dueData.append('name', this.name?.value)
+    this.Subscription.add(
+      this.airlineService.addADoaa(dueData).subscribe(
+        (res: any) => {
+          this.refreshData.emit(res.data)
+          this.router.navigate([`dashboard/doaa-list`]);
+          this.notificationService.showNotification(
+            res.message_en,
+            'ok',
+            'success'
+          );
+        },
+        (err) => {
 
-            console.log('errrrooor');
-          }
-        )
-      );
-    } else {
-      this.doaa.name = this.addForm.value.name;
-      const dueData = new FormData()
-      dueData.append("path",this.file?.value)
-      dueData.append('type',"due")
-      dueData.append('des',"due")
-      dueData.append('name',this.name?.value)
-      this.Subscription.add(
-        this.airlineService.editDoaa(dueData).subscribe(
-          (res: any) => {
-            console.log(res);
-            this.refreshData.emit(dueData);
-            this.router.navigate([`dashboard/airlins-list`]);
-            this.notificationService.showNotification(
-              'Airline Edited Successfuly',
-              'ok',
-              'success'
-            );
-          },
-          (err) => {
-            this.notificationService.showNotification(
-              'Airline Edit Faild',
-              'ok',
-              'error'
-            );
-            console.log('errrrooor');
-          }
-        )
-      );
-    }
+          this.notificationService.showNotification(
+            err.error.error_ar ? err.error.error_ar : err.error.error,
+            'ok',
+            'error'
+          );
+
+          console.log('errrrooor');
+        }
+      )
+    );
   }
 
   handleFileInput(event: any) {
@@ -124,7 +81,7 @@ export class AddDoaaComponent implements OnInit {
       if (fileToUploadControl) { // check if the control is not null or undefined
         fileToUploadControl.setValue(file);
         console.log(fileToUploadControl);
-        
+
       }
     }
   }
