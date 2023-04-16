@@ -37,6 +37,18 @@
             <div class="row">
               <mat-form-field>
                 <mat-label class="col-lg-5 mb-2 col-form-label required fw-bold fs-6">
+                  Description
+                </mat-label>
+                <span class="col-12">
+                  <input name="description" formControlName="description" type="text" class="form-control form-control-lg"
+                    placeholder=" Description" required matInput />
+                </span>
+                <mat-error *ngIf="addForm.controls['description'].errors?.['required']">Description required</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <mat-form-field>
+                <mat-label class="col-lg-5 mb-2 col-form-label required fw-bold fs-6">
                   Sort Order
                 </mat-label>
                 <span class="col-12">
@@ -60,7 +72,7 @@
         </div>
       </div>
       <div class="form-footer d-flex justify-content-end">
-        <button [disabled]="!addForm.valid" class="btn btn-dark m-2 p-3 fs-6 cursor-pointer" (click)="addSurah()">
+        <button  class="btn btn-dark m-2 p-3 fs-6 cursor-pointer" (click)="addSurah()">
           {{ editMode ? "Edit" : "Add" }}
         </button>
       </div>

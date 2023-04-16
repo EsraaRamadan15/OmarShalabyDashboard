@@ -27,7 +27,7 @@ export class SurahsListComponent implements OnInit, OnDestroy {
     private router: Router,
     private dialogService: DialogServiceService,
     private notificationService: ToasterNotifierService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllsurahs();
@@ -36,7 +36,7 @@ export class SurahsListComponent implements OnInit, OnDestroy {
     this.Subscription.add(
       this.surahService.getAllsurahs(1, 10).subscribe((res: any) => {
         console.log(res, 'surahs');
-        this.surahs = [{id:"1",nameEn:"el fatiha",nameAr:"uuuu",sortOrder:"1",fileToUpload:null}];
+        this.surahs = [{ id: "1", nameEn: "el fatiha", nameAr: "uuuu", description: "test", sortOrder: "1", fileToUpload: null }];
         console.log(this.surahs);
       })
     );
@@ -57,6 +57,7 @@ export class SurahsListComponent implements OnInit, OnDestroy {
         id: category.id,
         nameEn: category.nameEn,
         nameAr: category.nameAr,
+        description: category.description,
         sortOrder: category.sortOrder,
       },
     ]);
