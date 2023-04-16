@@ -39,32 +39,28 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
-      deviceToken: new FormControl(null),
     });
   }
   submit() {
-    this.router.navigate(['/dashboard/dashboard']);
-    // this.Subscription.add(
-    //   this.authService.login(this.loginForm.value).subscribe(
-    //     (res: any) => {
-    //       if (res) {
-    //         if (localStorage.getItem('token') !== null) {
-    //           console.log(localStorage.getItem('token'));
-    //           this.notificationService.showNotification(
-    //             'Logged Successfuly',
-    //             'ok',
-    //             'success'
-    //           );
-    //          // this.router.navigate(['/dashboard/trips-list']);
-    //         }
-    //         localStorage.setItem('token', res.result.token);
-    //       }
-    //     },
-    //     (err) => {
-    //       this.openDialog();
-    //     }
-    //   )
-    // );
+    this.Subscription.add(
+      this.authService.login(this.loginForm.value).subscribe(
+        (response: any) => {
+          if (response) {
+            this.notificationService.showNotification(
+              'Logged Successfuly',
+              'ok',
+              'success'
+            );
+              localStorage.setItem('token',response.res.token);
+
+            this.router.navigate(['/dashboard/dashboard']);
+          }
+        },
+        (err) => {
+          this.openDialog();
+        }
+      )
+    );
   }
 
   openDialog() {

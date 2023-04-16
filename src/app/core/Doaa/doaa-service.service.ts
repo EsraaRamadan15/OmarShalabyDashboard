@@ -1,28 +1,37 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Doaa } from '../models/doaa';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DoaaService {
-  baseUrl: string = 'https://hykerz.business-book.site/';
+  baseUrl: string = 'http://localhost:8080/quran/api/v1/';
   headers = new HttpHeaders({
     Authorization: 'Bearer ' + localStorage.getItem('token'),
   });
   constructor(private http: HttpClient) {}
-  getAllDoaas(page: number, size: number) {
+  getAllDoaas() {
     return this.http.get<Doaa>(
-      `${this.baseUrl}airline/getAllAirlinesForWeb?page=${page}&size=${size}`,
+      `${this.baseUrl}dueaAndQuran/duea`,
       {
         headers: this.headers,
       }
-    );
+    ).pipe(
+      map((res:any)  => res.data.
+      map((obj: any) => {
+        return {
+          id:obj._id,
+          name: obj.name,
+          description: obj.des
+       }
+    })));
   }
   addADoaa(body: any) {
     return this.http.post(`${this.baseUrl}airline/add`, body, {
       headers: this.headers,
-    });
+    })
   }
   editDoaa(data: any) {
     return this.http.post(`${this.baseUrl}airline/edit`, data, {
@@ -30,6 +39,10 @@ export class DoaaService {
     });
   }
   deleteDoaa(id: any) {
-    return this.http.delete(`${this.baseUrl}airline/delete?id=${id}`);
+    console.log(id)
+    return this.http.delete(`${this.baseUrl}dueaAndQuran/${id}`,
+    {
+      headers: this.headers,
+    });
   }
 }

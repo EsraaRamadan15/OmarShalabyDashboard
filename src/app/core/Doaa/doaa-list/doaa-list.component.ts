@@ -30,13 +30,13 @@ export class DoaaListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getCategoryLits();
+    this.GetAllDueas();
   }
-  getCategoryLits() {
+  GetAllDueas() {
     this.Subscription.add(
-      this.doaaService.getAllDoaas(1, 10).subscribe((res: any) => {
+      this.doaaService.getAllDoaas().subscribe((res: any) => {
         console.log(res, 'surahs');
-        this.doaas = [{id:"1",name:"el doaa1",itemsCount:1}];
+        this.doaas = res;
       })
     );
   }
@@ -60,27 +60,27 @@ export class DoaaListComponent implements OnInit, OnDestroy {
       },
     ]);
   }
-  deleteDoaa(catId: string | null) {
+  deleteDoaa(id: string | null) {
     this.dialogService
-      .openConfirmMessage('Are you sure to delete this Surah?')
+      .openConfirmMessage('Are you sure to delete this Duea?')
       .afterClosed()
       .subscribe((res) => {
         if (res) {
-          this.doaaService.deleteDoaa(catId).subscribe(
+          this.doaaService.deleteDoaa(id).subscribe(
             (res) => {
               if (res) {
                 this.notificationService.showNotification(
-                  'Surah Deleted Successfuly',
+                  'Duea Deleted Successfuly',
                   'ok',
                   'success'
                 );
 
-                this.getCategoryLits();
+                this.GetAllDueas();
               }
             },
             (err) => {
               this.notificationService.showNotification(
-                'Category Deleted Faild',
+                'Duea Deleted Faild',
                 'ok',
                 'error'
               );

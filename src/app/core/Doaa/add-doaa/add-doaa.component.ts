@@ -35,7 +35,7 @@ export class AddDoaaComponent implements OnInit {
     this.doaa = {
       id: this.roterActivate.snapshot.paramMap.get('id'),
       name: this.roterActivate.snapshot.paramMap.get('name'),
-      itemsCount: 0,
+      description: 0,
     };
     this.initForm();
   }
