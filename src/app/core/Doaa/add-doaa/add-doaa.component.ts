@@ -14,6 +14,12 @@ import { DoaaService } from '../doaa-service.service';
 })
 export class AddDoaaComponent implements OnInit {
   addForm: FormGroup = new FormGroup({});
+  get name() {
+    return this.addForm.get('name')
+  }
+  get file (){
+    return this.addForm.get('fileToUpload')
+  }
   doaa = {} as Doaa;
   fileToUpload: File | null = null;
 
@@ -27,7 +33,7 @@ export class AddDoaaComponent implements OnInit {
     private router: Router,
     private snackBar: MatSnackBar,
     private notificationService: ToasterNotifierService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (this.roterActivate.snapshot.url[0].path == 'edit-airline') {
@@ -35,10 +41,10 @@ export class AddDoaaComponent implements OnInit {
     }
     this.doaa = {
       id: this.roterActivate.snapshot.paramMap.get('id'),
-      name: this.roterActivate.snapshot.paramMap.get('name'),
+      name:this.name?.value,
       description: 0,
       fileToUpload: this.roterActivate.snapshot.paramMap.get('fileToUpload'),
-    };
+    };    
     this.initForm();
   }
 
@@ -50,8 +56,13 @@ export class AddDoaaComponent implements OnInit {
   }
   addDoaa() {
     if (this.doaa.id == null || this.doaa.id == undefined) {
+      const dueData = new FormData()
+      dueData.append("path",this.file?.value)
+      dueData.append('type',"due")
+      dueData.append('des',"due")
+      dueData.append('name',this.name?.value)
       this.Subscription.add(
-        this.airlineService.addADoaa(this.addForm.value).subscribe(
+        this.airlineService.addADoaa(dueData).subscribe(
           (res: any) => {
             this.doaa = res.result;
             this.router.navigate([`dashboard/airlins-list`]);
@@ -74,11 +85,16 @@ export class AddDoaaComponent implements OnInit {
       );
     } else {
       this.doaa.name = this.addForm.value.name;
+      const dueData = new FormData()
+      dueData.append("path",this.file?.value)
+      dueData.append('type',"due")
+      dueData.append('des',"due")
+      dueData.append('name',this.name?.value)
       this.Subscription.add(
-        this.airlineService.editDoaa(this.doaa).subscribe(
+        this.airlineService.editDoaa(dueData).subscribe(
           (res: any) => {
             console.log(res);
-            this.refreshData.emit(this.doaa);
+            this.refreshData.emit(dueData);
             this.router.navigate([`dashboard/airlins-list`]);
             this.notificationService.showNotification(
               'Airline Edited Successfuly',
@@ -107,6 +123,8 @@ export class AddDoaaComponent implements OnInit {
       const fileToUploadControl = this.addForm.get('fileToUpload');
       if (fileToUploadControl) { // check if the control is not null or undefined
         fileToUploadControl.setValue(file);
+        console.log(fileToUploadControl);
+        
       }
     }
   }

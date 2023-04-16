@@ -9,7 +9,7 @@ import { map } from 'rxjs';
 export class DoaaService {
   baseUrl: string = 'http://localhost:8080/quran/api/v1/';
   headers = new HttpHeaders({
-    Authorization: 'Bearer ' + localStorage.getItem('token'),
+    Authorization: `${localStorage.getItem('token')}`,
   });
   constructor(private http: HttpClient) {}
   getAllDoaas() {
@@ -29,7 +29,7 @@ export class DoaaService {
     })));
   }
   addADoaa(body: any) {
-    return this.http.post(`${this.baseUrl}airline/add`, body, {
+    return this.http.post(`${this.baseUrl}dueaAndQuran/duea`, body, {
       headers: this.headers,
     })
   }
