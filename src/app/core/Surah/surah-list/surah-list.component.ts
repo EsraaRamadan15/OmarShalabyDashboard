@@ -12,6 +12,7 @@ import { DialogServiceService } from 'src/app/shared/dialog-service.service';
 import { ToasterNotifierService } from 'src/app/shared/toaster-notifier.service';
 import { SurahService } from '../services/surah-service.service';
 import { Surah } from '../../models/surah';
+import { DoaaSurahhListItem } from '../../models/doaaSurahListItem';
 
 @Component({
   selector: 'app-surahs',
@@ -19,7 +20,7 @@ import { Surah } from '../../models/surah';
   styleUrls: ['./surah-list.component.css'],
 })
 export class SurahsListComponent implements OnInit, OnDestroy {
-  surahs: Surah[] = [];
+  surahs: DoaaSurahhListItem[] = [];
   Subscription: Subscription = new Subscription();
 
   constructor(
@@ -34,9 +35,8 @@ export class SurahsListComponent implements OnInit, OnDestroy {
   }
   getAllsurahs() {
     this.Subscription.add(
-      this.surahService.getAllsurahs(1, 10).subscribe((res: any) => {
-        console.log(res, 'surahs');
-        this.surahs = [{ id: "1", nameEn: "el fatiha", nameAr: "uuuu", description: "test", sortOrder: "1", fileToUpload: null }];
+      this.surahService.getAllsurahs().subscribe((res: any) => {
+        this.surahs =res;
         console.log(this.surahs);
       })
     );
@@ -83,7 +83,7 @@ export class SurahsListComponent implements OnInit, OnDestroy {
             },
             (err) => {
               this.notificationService.showNotification(
-                'Category Deleted Faild',
+                'Surah Deleted Faild',
                 'ok',
                 'error'
               );

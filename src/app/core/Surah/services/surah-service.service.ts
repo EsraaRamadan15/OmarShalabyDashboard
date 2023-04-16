@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Surah } from '../../models/surah';
 import { environment } from 'src/environments/environment';
+import { map } from 'rxjs';
+import { DoaaSurahhListItem } from '../../models/doaaSurahListItem';
 
 
 @Injectable({
@@ -11,19 +13,28 @@ export class SurahService {
   private static SURAH_ENDPOINT_BASE_URL = () =>
     environment.backendUrl;
 
-
-  baseUrl: string = 'http://localhost:8080/';
+    baseUrl: string = 'http://localhost:8080/quran/api/v1/';
   headers = new HttpHeaders({
     Authorization: ''+ localStorage.getItem('token'),
   });
 
   constructor(private httpClient: HttpClient) { }
 
-  getAllsurahs(page: number, size: number) {
-    return this.httpClient.get<Surah>(
-      `${this.baseUrl}category/getAllCategories?page=${page}&size=${size}`,
-      { headers: this.headers }
-    );
+  getAllsurahs() {
+    return this.httpClient.get<DoaaSurahhListItem>(
+      `${this.baseUrl}dueaAndQuran/surah`,
+      {
+        headers: this.headers,
+      }
+    ).pipe(
+      map((res:any)  => res.data.
+      map((obj: any) => {
+        return {
+          id:obj._id,
+          name: obj.name,
+          description: obj.des
+       }
+    })));
   }
 
   addSurah(body: any) {
@@ -51,8 +62,12 @@ export class SurahService {
     );
   }
 
+
+
   deleteSurah(id: any) {
-    return this.httpClient.delete(`${this.baseUrl}category/deleteCategory?id=${id}`, {
+    console.log(id)
+    return this.httpClient.delete(`${this.baseUrl}dueaAndQuran/${id}`,
+    {
       headers: this.headers,
     });
   }

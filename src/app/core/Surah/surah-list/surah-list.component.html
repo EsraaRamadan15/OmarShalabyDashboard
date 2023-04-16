@@ -10,11 +10,9 @@
     <table class="table mb-0 bg-white w-100 rounded">
       <thead class="bg-light">
         <tr>
-          <th class="text-nowrap">English Name</th>
-          <th class="text-nowrap">Arabic Name</th>
+          <th class="text-nowrap"> Name</th>
           <th class="text-nowrap">Description</th>
-          <th class="text-nowrap">Sort Order</th>
-          <th class="text-nowrap">View subCategoriy</th>
+          <!-- <th class="text-nowrap">View subCategoriy</th> -->
           <th class="text-nowrap">Edit</th>
           <th class="text-nowrap">Delete</th>
         </tr>
@@ -24,22 +22,24 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-1">
-                <p class="fw-normal m-2">{{ surah.nameEn }}</p>
+                <p class="fw-normal m-2">{{ surah.name }}</p>
               </div>
             </div>
           </td>
-          <td>
-            <p class="fw-normal m-2">{{ surah.nameAr }}</p>
-          </td>
 
           <td>
-            <p class="fw-normal m-2">{{ surah.sortOrder }}</p>
+            <div class="d-flex align-items-center">
+              <div class="ms-1">
+                <p class="fw-normal m-2">{{ surah.description }}</p>
+              </div>
+            </div>
           </td>
-          <td>
+
+          <!-- <td>
             <a style="cursor: pointer" (click)="viewSubCategory(surah.id)">
               <i class="fa fa-eye fs-4 text-muted mx-5 mt-2"></i>
             </a>
-          </td>
+          </td> -->
 
           <td>
             <a style="cursor: pointer" (click)="editSurah(surah)">

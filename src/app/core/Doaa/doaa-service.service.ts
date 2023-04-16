@@ -14,7 +14,7 @@ export class DoaaService {
   constructor(private http: HttpClient) {}
   getAllDoaas() {
     return this.http.get<Doaa>(
-      `${this.baseUrl}dueaAndQuran/due`,
+      `${this.baseUrl}dueaAndQuran/duea`,
       {
         headers: this.headers,
       }

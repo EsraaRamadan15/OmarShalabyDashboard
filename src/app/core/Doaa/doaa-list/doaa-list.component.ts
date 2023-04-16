@@ -48,15 +48,12 @@ export class DoaaListComponent implements OnInit, OnDestroy {
   addDoaa() {
     this.router.navigate([`dashboard/add-doaa`]);
   }
-  editDoaa(category: any) {
-    console.log(category);
+  editDoaa(doaa: any) {
+    console.log(doaa)
     this.router.navigate([
-      `dashboard/edit-category`,
+      `dashboard/add-doaa`,
       {
-        id: category.id,
-        nameEn: category.nameEn,
-        nameAr: category.nameAr,
-        sortOrder: category.sortOrder,
+        id: doaa.id,
       },
     ]);
   }
