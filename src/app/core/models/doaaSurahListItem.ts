@@ -1,5 +1,5 @@
 export interface DoaaSurahhListItem {
-  id: string | null;
+  id: string;
   name: string | null;
   description: number;
 

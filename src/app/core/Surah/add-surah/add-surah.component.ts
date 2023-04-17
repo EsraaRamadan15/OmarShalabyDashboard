@@ -29,6 +29,7 @@ export class AddSurahComponent implements OnInit {
   }
   surah = {} as Surah;
   fileToUpload: File | null = null;
+  id: string = '';
 
   @Output() refreshData: EventEmitter<any> = new EventEmitter();
   isAddMode!: boolean;
@@ -44,19 +45,26 @@ export class AddSurahComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // if (this.routeActivate.snapshot.url[0].path == 'edit-category') {
-    //   this.editMode = !this.editMode;
-    // }
-    // this.surah = {
-    //   id: this.routeActivate.snapshot.paramMap.get('id'),
-    //   nameEn: this.routeActivate.snapshot.paramMap.get('nameEn'),
-    //   nameAr: this.routeActivate.snapshot.paramMap.get('nameAr'),
-    //   description: this.routeActivate.snapshot.paramMap.get('description'),
-    //   sortOrder: this.routeActivate.snapshot.paramMap.get('sortOrder'),
-    //   fileToUpload: this.routeActivate.snapshot.paramMap.get('fileToUpload'),
-    // };
+    this.routeActivate.params.subscribe(param => {
+      if (param['id']) {
+        this.id = param['id']
+        this.editMode = !this.editMode;
 
-    // this.initFrom();
+        this.categoryService.getSurah(this.id).subscribe((res: any) => {
+          this.surah = res;
+
+          // const { fileToUpload } = res;
+          console.log("Ewgw: ", this.surah)
+
+          // this.angularFilePath = fileToUpload.replace(/\\/g, '/');
+
+          // console.log("SGRE:G ", this.angularFilePath);
+          // this.path = `http://localhost:8080/${this.angularFilePath}`;
+
+          // console.log("ewgjweg: ", this.path);
+        })
+      }
+    });
   }
 
   addSurah() {

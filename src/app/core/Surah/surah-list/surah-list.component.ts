@@ -36,7 +36,7 @@ export class SurahsListComponent implements OnInit, OnDestroy {
   getAllsurahs() {
     this.Subscription.add(
       this.surahService.getAllsurahs().subscribe((res: any) => {
-        this.surahs =res;
+        this.surahs = res;
         console.log(this.surahs);
       })
     );
@@ -49,19 +49,14 @@ export class SurahsListComponent implements OnInit, OnDestroy {
   addSurah() {
     this.router.navigate([`dashboard/add-surah`]);
   }
-  editSurah(category: any) {
-    console.log(category);
+
+  editSurah(id: string) {
     this.router.navigate([
-      `dashboard/edit-category`,
-      {
-        id: category.id,
-        nameEn: category.nameEn,
-        nameAr: category.nameAr,
-        description: category.description,
-        sortOrder: category.sortOrder,
-      },
+      `dashboard/edit-surah/${id}`
     ]);
   }
+
+
   deleteSurah(catId: string | null) {
     this.dialogService;
     this.dialogService

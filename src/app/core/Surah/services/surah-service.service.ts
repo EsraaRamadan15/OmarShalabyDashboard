@@ -53,15 +53,23 @@ export class SurahService {
     );
   }
 
+
   getSurah(id: string) {
     return this.httpClient.get<Surah>(
-      `${this.baseUrl}category/getCategory?id=${id}`,
+      `${this.baseUrl}dueaAndQuran/${id}`,
       {
         headers: this.headers,
       }
-    );
+    ).pipe(
+      map((res: any) => {
+        return {
+          id: res.data._id,
+          name: res.data.name,
+          description: res.data.des,
+          fileToUpload: res.data.path
+        }
+      }));
   }
-
 
 
   deleteSurah(id: any) {

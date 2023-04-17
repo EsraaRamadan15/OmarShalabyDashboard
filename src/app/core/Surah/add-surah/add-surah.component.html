@@ -15,7 +15,7 @@
                 </mat-label>
                 <span class="col-12">
                   <input name="name" formControlName="name" type="text" class="form-control form-control-lg"
-                    placeholder=" Arabic Name" matInput minlength="2" maxlength="151" required />
+                    placeholder="Name" matInput minlength="2" maxlength="151" required [(ngModel)]="surah.name" />
                 </span>
                 <mat-error *ngIf="addForm.controls['name'].errors?.['required']">
                   Arabic Name is required</mat-error>
@@ -28,7 +28,7 @@
                 </mat-label>
                 <span class="col-12">
                   <input name="description" formControlName="description" type="text"
-                    class="form-control form-control-lg" placeholder=" Description" required matInput />
+                    class="form-control form-control-lg" placeholder=" Description" required matInput [(ngModel)]="surah.description" />
                 </span>
                 <mat-error *ngIf="addForm.controls['description'].errors?.['required']">Description required</mat-error>
               </mat-form-field>
