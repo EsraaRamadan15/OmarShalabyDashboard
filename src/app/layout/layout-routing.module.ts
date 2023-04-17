@@ -24,7 +24,7 @@ const all_routes: Routes = [
     component: AddSurahComponent,
   },
   {
-    path: 'edit-surah',
+    path: 'edit-surah/:id',
     component: AddSurahComponent,
   },
   {
@@ -39,7 +39,7 @@ const all_routes: Routes = [
   },
 
   {
-    path: 'edit-doaa',
+    path: 'edit-doaa/:id',
     component: AddDoaaComponent,
   },
   {

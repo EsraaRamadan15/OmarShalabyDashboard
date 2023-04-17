@@ -11,25 +11,41 @@ export class DoaaService {
   headers = new HttpHeaders({
     Authorization: `${localStorage.getItem('token')}`,
   });
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   getAllDoaas() {
     return this.http.get<Doaa>(
-      `${this.baseUrl}dueaAndQuran/duea`,
+      `${this.baseUrl}dueaAndQuran/type=due`,
       {
         headers: this.headers,
       }
     ).pipe(
-      map((res:any)  => res.data.
-      map((obj: any) => {
-        return {
-          id:obj._id,
-          name: obj.name,
-          description: obj.des
-       }
-    })));
+      map((res: any) => res.data.
+        map((obj: any) => {
+          return {
+            id: obj._id,
+            name: obj.name,
+            description: obj.des
+          }
+        })));
   }
-  addADoaa(body: any) {
-    return this.http.post(`${this.baseUrl}dueaAndQuran/duea`, body, {
+  getDoaaById(id: string) {
+    return this.http.get<Doaa>(
+      `${this.baseUrl}dueaAndQuran/${id}`,
+      {
+        headers: this.headers,
+      }
+    ).pipe(
+      map((res: any) => {
+        return {
+          id: res.data._id,
+          name: res.data.name,
+          description: res.data.des,
+          fileToUpload: res.data.path
+        }
+      }));
+  }
+  addDoaa(body: any) {
+    return this.http.post(`${this.baseUrl}dueaAndQuran/type=due`, body, {
       headers: this.headers,
     })
   }
@@ -41,8 +57,8 @@ export class DoaaService {
   deleteDoaa(id: any) {
     console.log(id)
     return this.http.delete(`${this.baseUrl}dueaAndQuran/${id}`,
-    {
-      headers: this.headers,
-    });
+      {
+        headers: this.headers,
+      });
   }
 }

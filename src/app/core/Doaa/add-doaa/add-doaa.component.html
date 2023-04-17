@@ -15,16 +15,31 @@
                 </mat-label>
                 <span class="col-12 mb-3">
                   <input name="name" formControlName="name" type="text" class="form-control form-control-lg"
-                    placeholder="Name" required matInput />
+                    placeholder="Name" required matInput [(ngModel)]="doaa.name" />
                 </span>
                 <mat-error *ngIf="addForm.controls['name'].errors?.['required']">
                   Name is required</mat-error>
               </mat-form-field>
             </div>
             <div class="row">
+              <mat-form-field>
+                <mat-label class="col-lg-5 col-form-label required fw-bold fs-6 mb-2">
+                  Description
+                </mat-label>
+                <span class="col-12 mb-3">
+                  <input name="description" formControlName="description" type="text"
+                    class="form-control form-control-lg" placeholder="Description" required matInput
+                    [(ngModel)]="doaa.description" />
+                </span>
+                <mat-error *ngIf="addForm.controls['description'].errors?.['required']">
+                  Description is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="row">
               <mat-label class="col-lg-5 mb-2 col-form-label required fw-bold fs-6">
-                Surah File
+                Doaa File
               </mat-label>
+              <audio controls><source [src]="path" /></audio>
               <span class="col-12">
                 <input type="file" accept=".mp3" (change)="handleFileInput($event)">
               </span>

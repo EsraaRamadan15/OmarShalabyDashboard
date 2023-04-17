@@ -27,7 +27,7 @@ export class DoaaListComponent implements OnInit, OnDestroy {
     private router: Router,
     private dialogService: DialogServiceService,
     private notificationService: ToasterNotifierService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.GetAllDueas();
@@ -35,7 +35,6 @@ export class DoaaListComponent implements OnInit, OnDestroy {
   GetAllDueas() {
     this.Subscription.add(
       this.doaaService.getAllDoaas().subscribe((res: any) => {
-        console.log(res, 'surahs');
         this.doaas = res;
       })
     );
@@ -51,10 +50,7 @@ export class DoaaListComponent implements OnInit, OnDestroy {
   editDoaa(doaa: any) {
     console.log(doaa)
     this.router.navigate([
-      `dashboard/add-doaa`,
-      {
-        id: doaa.id,
-      },
+      `dashboard/edit-doaa/${doaa.id}`
     ]);
   }
   deleteDoaa(id: string | null) {
