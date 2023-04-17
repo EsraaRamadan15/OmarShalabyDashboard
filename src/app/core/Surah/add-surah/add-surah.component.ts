@@ -19,13 +19,14 @@ export class AddSurahComponent implements OnInit {
     fileToUpload: new FormControl('', [Validators.required]),
   });
   get name() {
-    return this.addForm.get('name')
+    return this.addForm.get('name')?.value
   }
+
   get description() {
-    return this.addForm.get('description')
+    return this.addForm.get('description')?.value
   }
   get file() {
-    return this.addForm.get('fileToUpload')
+    return this.addForm.get('fileToUpload')?.value
   }
   surah = {} as Surah;
   fileToUpload: File | null = null;
@@ -69,31 +70,54 @@ export class AddSurahComponent implements OnInit {
 
   addSurah() {
     let formData = new FormData();
-    formData.append('name', this.name?.value)
-    formData.append("path", this.file?.value)
+    formData.append('name', this.name)
+    formData.append("path", this.file)
     formData.append('type', "quran")
-    formData.append('des', this.description?.value)
+    formData.append('des', this.description)
 
-    this.Subscription.add(
-      this.categoryService.addSurah(formData).subscribe(
-        (res: any) => {
-          this.refreshData.emit(this.addForm.value);
-          this.router.navigate([`dashboard/categories`]);
+    console.log("WEGWEGW: ", formData)
+    if (!this.editMode) {
+      this.Subscription.add(
+        this.categoryService.addSurah(formData).subscribe(
+          (res: any) => {
+            this.refreshData.emit(this.addForm.value);
+            this.router.navigate([`dashboard/surahs-list`]);
+            this.notificationService.showNotification(
+              'Category Added Successfuly',
+              'ok',
+              'success'
+            );
+          },
+          (err) => {
+            this.notificationService.showNotification(
+              'Category Add Faild',
+              'ok',
+              'error'
+            );
+          }
+        )
+      );
+    } else {
+      this.categoryService.editSurah(this.id, formData).subscribe({
+        next: (res: any) => {
+          this.refreshData.emit(res.data)
+          this.router.navigate([`dashboard/surahs-list`]);
           this.notificationService.showNotification(
-            'Category Added Successfuly',
+            res.message_en,
             'ok',
             'success'
           );
         },
-        (err) => {
+        error: (err: any) => {
           this.notificationService.showNotification(
-            'Category Add Faild',
+            err.error.error_ar ? err.error.error_ar : err.error.error,
             'ok',
             'error'
           );
         }
-      )
-    );
+      })
+    }
+
   }
 
   handleFileInput(event: any) {

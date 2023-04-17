@@ -49,8 +49,8 @@ export class DoaaService {
       headers: this.headers,
     })
   }
-  editDoaa(data: any) {
-    return this.http.post(`${this.baseUrl}airline/edit`, data, {
+  editDoaa(id: string, data: any) {
+    return this.http.put(`${this.baseUrl}dueaAndQuran/${id}`, data, {
       headers: this.headers,
     });
   }

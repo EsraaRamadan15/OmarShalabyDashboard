@@ -20,13 +20,13 @@ export class AddDoaaComponent implements OnInit {
     fileToUpload: new FormControl('', [Validators.required]),
   });
   get name() {
-    return this.addForm.get('name')
+    return this.addForm.get('name')?.value;
   }
   get description() {
-    return this.addForm.get('description')
+    return this.addForm.get('description')?.value;
   }
   get file() {
-    return this.addForm.get('fileToUpload')
+    return this.addForm.get('fileToUpload')?.value;
   }
   doaa = {} as Doaa;
   id: string = '';
@@ -75,12 +75,35 @@ export class AddDoaaComponent implements OnInit {
 
   addDoaa() {
     const dueData = new FormData()
-    dueData.append('name', this.name?.value)
-    dueData.append("path", this.file?.value)
+    console.log("WEGWEGEGE: " , this.description)
+    dueData.append('name', this.name)
+    dueData.append("path", this.file)
     dueData.append('type', "due")
-    dueData.append('des', this.description?.value)
-    this.Subscription.add(
-      this.doaService.addDoaa(dueData).subscribe({
+    dueData.append('des', this.description);
+    if (!this.editMode) {
+      this.Subscription.add(
+        this.doaService.addDoaa(dueData).subscribe({
+          next: (res: any) => {
+            this.refreshData.emit(res.data)
+            this.router.navigate([`dashboard/doaa-list`]);
+            this.notificationService.showNotification(
+              res.message_en,
+              'ok',
+              'success'
+            );
+          },
+          error: (err: any) => {
+            this.notificationService.showNotification(
+              err.error.error_ar ? err.error.error_ar : err.error.error,
+              'ok',
+              'error'
+            );
+          }
+        })
+
+      );
+    } else {
+      this.doaService.editDoaa(this.id, dueData).subscribe({
         next: (res: any) => {
           this.refreshData.emit(res.data)
           this.router.navigate([`dashboard/doaa-list`]);
@@ -98,7 +121,7 @@ export class AddDoaaComponent implements OnInit {
           );
         }
       })
-    );
+    }
   }
 
   handleFileInput(event: any) {

@@ -79,18 +79,10 @@ export class SurahService {
         headers: this.headers,
       });
   }
-  editSurah(data: any) {
-    return this.httpClient.patch(`${this.baseUrl}category/editCategory`, data, {
+  editSurah(id: string, data: any) {
+    return this.httpClient.put(`${this.baseUrl}dueaAndQuran/${id}`, data, {
       headers: this.headers,
     });
   }
-
-
-
-
-
-
-
-
 
 }
