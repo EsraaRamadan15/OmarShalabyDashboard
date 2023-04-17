@@ -15,7 +15,7 @@ export class SurahService {
 
   baseUrl: string = 'http://localhost:8080/quran/api/v1/';
   headers = new HttpHeaders({
-    Authorization: '' + localStorage.getItem('token'),
+    Authorization: `${localStorage.getItem('token')}`,
   });
 
   constructor(private httpClient: HttpClient) { }
@@ -39,7 +39,7 @@ export class SurahService {
 
   addSurah(body: any) {
 
-    return this.httpClient.post(`${this.baseUrl}quran/api/v1/dueaAndQuran`, body, {
+    return this.httpClient.post(`${this.baseUrl}dueaAndQuran/type=quran`, body, {
       headers: this.headers,
     });
   }

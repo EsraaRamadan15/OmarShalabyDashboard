@@ -13,7 +13,20 @@ import { SurahService } from '../services/surah-service.service';
   styleUrls: ['./add-surah.component.css'],
 })
 export class AddSurahComponent implements OnInit {
-  addForm: FormGroup = new FormGroup({});
+  addForm: FormGroup = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required]),
+    fileToUpload: new FormControl('', [Validators.required]),
+  });
+  get name() {
+    return this.addForm.get('name')
+  }
+  get description() {
+    return this.addForm.get('description')
+  }
+  get file() {
+    return this.addForm.get('fileToUpload')
+  }
   surah = {} as Surah;
   fileToUpload: File | null = null;
 
@@ -31,88 +44,53 @@ export class AddSurahComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.routeActivate.snapshot.url[0].path == 'edit-category') {
-      this.editMode = !this.editMode;
-    }
-    this.surah = {
-      id: this.routeActivate.snapshot.paramMap.get('id'),
-      nameEn: this.routeActivate.snapshot.paramMap.get('nameEn'),
-      nameAr: this.routeActivate.snapshot.paramMap.get('nameAr'),
-      description: this.routeActivate.snapshot.paramMap.get('description'),
-      sortOrder: this.routeActivate.snapshot.paramMap.get('sortOrder'),
-      fileToUpload: this.routeActivate.snapshot.paramMap.get('fileToUpload'),
-    };
+    // if (this.routeActivate.snapshot.url[0].path == 'edit-category') {
+    //   this.editMode = !this.editMode;
+    // }
+    // this.surah = {
+    //   id: this.routeActivate.snapshot.paramMap.get('id'),
+    //   nameEn: this.routeActivate.snapshot.paramMap.get('nameEn'),
+    //   nameAr: this.routeActivate.snapshot.paramMap.get('nameAr'),
+    //   description: this.routeActivate.snapshot.paramMap.get('description'),
+    //   sortOrder: this.routeActivate.snapshot.paramMap.get('sortOrder'),
+    //   fileToUpload: this.routeActivate.snapshot.paramMap.get('fileToUpload'),
+    // };
 
-    this.initFrom();
+    // this.initFrom();
   }
-  initFrom() {
-    this.addForm = new FormGroup({
-      nameEn: new FormControl(this.surah.nameEn, [Validators.required]),
-      nameAr: new FormControl(this.surah.nameAr, [Validators.required]),
-      description: new FormControl(this.surah.description, [Validators.required]),
-      sortOrder: new FormControl(this.surah.sortOrder, [
-        Validators.required,
-        Validators.pattern('^[0-9]*$'),
-      ]),
-      fileToUpload: new FormControl(this.surah.fileToUpload, [Validators.required])
-    });
-  }
+
   addSurah() {
     let formData = new FormData();
-    formData.append('nameEn', this.addForm.value.nameEn);
-    formData.append('nameAr', this.addForm.value.nameAr);
-    formData.append('sortOrder', this.addForm.value.sortOrder);
-    formData.append('description', this.addForm.value.description);
-    // add the file to the form data only if it is not null or undefined
-    if (this.fileToUpload) {
-      formData.append('fileToUpload', this.fileToUpload);
-    }
+    formData.append('name', this.name?.value)
+    formData.append("path", this.file?.value)
+    formData.append('type', "quran")
+    formData.append('des', this.description?.value)
 
-    let test = {
-      name: this.addForm.value.nameAr,
-      type: 'quran',
-      des: this.addForm.value.description,
-      path: this.addForm.value.fileToUpload,
-    }
-
-    console.log("aaa: ", formData);
-    console.log("EEEEEEEEEEE: ", test);
-    console.log(" this.addForm.value: ", this.addForm.value);
-
-    if (this.surah.id == null || this.surah.id == undefined) {
-      this.Subscription.add(
-        this.categoryService.addSurah(test).subscribe(
-          (res: any) => {
-            this.refreshData.emit(this.addForm.value);
-            this.router.navigate([`dashboard/categories`]);
-            this.notificationService.showNotification(
-              'Category Added Successfuly',
-              'ok',
-              'success'
-            );
-          },
-          (err) => {
-            this.notificationService.showNotification(
-              'Category Add Faild',
-              'ok',
-              'error'
-            );
-          }
-        )
-      );
-    } else {
-      this.surah.nameEn = this.addForm.value.nameEn;
-      this.surah.nameAr = this.addForm.value.nameAr;
-      this.surah.description = this.addForm.value.description;
-      this.surah.sortOrder = this.addForm.value.sortOrder;
-      // TODO: update category with the new form data
-    }
+    this.Subscription.add(
+      this.categoryService.addSurah(formData).subscribe(
+        (res: any) => {
+          this.refreshData.emit(this.addForm.value);
+          this.router.navigate([`dashboard/categories`]);
+          this.notificationService.showNotification(
+            'Category Added Successfuly',
+            'ok',
+            'success'
+          );
+        },
+        (err) => {
+          this.notificationService.showNotification(
+            'Category Add Faild',
+            'ok',
+            'error'
+          );
+        }
+      )
+    );
   }
 
   handleFileInput(event: any) {
     const files: FileList = event.target.files;
     const file = files.item(0);
-    console.log("testttt: ", file);
     if (file) {
       this.fileToUpload = file;
       const fileToUploadControl = this.addForm.get('fileToUpload');

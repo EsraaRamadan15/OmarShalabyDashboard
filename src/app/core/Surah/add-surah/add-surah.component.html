@@ -14,10 +14,10 @@
                   Title
                 </mat-label>
                 <span class="col-12">
-                  <input name="nameAr" formControlName="nameAr" type="text" class="form-control form-control-lg"
+                  <input name="name" formControlName="name" type="text" class="form-control form-control-lg"
                     placeholder=" Arabic Name" matInput minlength="2" maxlength="151" required />
                 </span>
-                <mat-error *ngIf="addForm.controls['nameAr'].errors?.['required']">
+                <mat-error *ngIf="addForm.controls['name'].errors?.['required']">
                   Arabic Name is required</mat-error>
               </mat-form-field>
             </div>
@@ -31,19 +31,6 @@
                     class="form-control form-control-lg" placeholder=" Description" required matInput />
                 </span>
                 <mat-error *ngIf="addForm.controls['description'].errors?.['required']">Description required</mat-error>
-              </mat-form-field>
-            </div>
-            <div class="row">
-              <mat-form-field>
-                <mat-label class="col-lg-5 mb-2 col-form-label required fw-bold fs-6">
-                  Sort Order
-                </mat-label>
-                <span class="col-12">
-                  <input name="sortOrder" formControlName="sortOrder" type="text" class="form-control form-control-lg"
-                    placeholder=" Sort Order" required matInput />
-                </span>
-                <mat-error *ngIf="addForm.controls['sortOrder'].errors?.['required']">Sort order required</mat-error>
-                <mat-error *ngIf="addForm.controls['sortOrder'].errors?.['pattern']">Only numbers</mat-error>
               </mat-form-field>
             </div>
             <div class="row">
