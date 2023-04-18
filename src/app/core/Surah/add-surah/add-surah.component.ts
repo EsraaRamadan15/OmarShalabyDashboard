@@ -66,6 +66,7 @@ export class AddSurahComponent implements OnInit {
         })
       }
     });
+
   }
 
   addSurah() {
@@ -98,7 +99,9 @@ export class AddSurahComponent implements OnInit {
         )
       );
     } else {
+      
       this.categoryService.editSurah(this.id, formData).subscribe({
+    
         next: (res: any) => {
           this.refreshData.emit(res.data)
           this.router.navigate([`dashboard/surahs-list`]);

@@ -14,7 +14,7 @@ export class DoaaService {
   constructor(private http: HttpClient) { }
   getAllDoaas() {
     return this.http.get<Doaa>(
-      `${this.baseUrl}dueaAndQuran/type=due`,
+      `${this.baseUrl}dueaAndQuran/due`,
       {
         headers: this.headers,
       }
@@ -30,7 +30,7 @@ export class DoaaService {
   }
   getDoaaById(id: string) {
     return this.http.get<Doaa>(
-      `${this.baseUrl}dueaAndQuran/${id}`,
+      `${this.baseUrl}dueaAndQuran/single/${id}`,
       {
         headers: this.headers,
       }
@@ -45,18 +45,18 @@ export class DoaaService {
       }));
   }
   addDoaa(body: any) {
-    return this.http.post(`${this.baseUrl}dueaAndQuran/type=due`, body, {
+    return this.http.post(`${this.baseUrl}dueaAndQuran/`, body, {
       headers: this.headers,
     })
   }
   editDoaa(id: string, data: any) {
-    return this.http.put(`${this.baseUrl}dueaAndQuran/${id}`, data, {
+    return this.http.put(`${this.baseUrl}dueaAndQuran/single/${id}`, data, {
       headers: this.headers,
     });
   }
   deleteDoaa(id: any) {
     console.log(id)
-    return this.http.delete(`${this.baseUrl}dueaAndQuran/${id}`,
+    return this.http.delete(`${this.baseUrl}dueaAndQuran/single/${id}`,
       {
         headers: this.headers,
       });

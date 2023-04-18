@@ -22,7 +22,7 @@ export class SurahService {
 
   getAllsurahs() {
     return this.httpClient.get<DoaaSurahhListItem>(
-      `${this.baseUrl}dueaAndQuran/type=quran`,
+      `${this.baseUrl}dueaAndQuran/quran`,
       {
         headers: this.headers,
       }
@@ -39,7 +39,7 @@ export class SurahService {
 
   addSurah(body: any) {
 
-    return this.httpClient.post(`${this.baseUrl}dueaAndQuran/type=quran`, body, {
+    return this.httpClient.post(`${this.baseUrl}dueaAndQuran/`, body, {
       headers: this.headers,
     });
   }
@@ -56,7 +56,7 @@ export class SurahService {
 
   getSurah(id: string) {
     return this.httpClient.get<Surah>(
-      `${this.baseUrl}dueaAndQuran/${id}`,
+      `${this.baseUrl}dueaAndQuran/single/${id}`,
       {
         headers: this.headers,
       }
@@ -74,13 +74,13 @@ export class SurahService {
 
   deleteSurah(id: any) {
     console.log(id)
-    return this.httpClient.delete(`${this.baseUrl}dueaAndQuran/${id}`,
+    return this.httpClient.delete(`${this.baseUrl}dueaAndQuran/single/${id}`,
       {
         headers: this.headers,
       });
   }
   editSurah(id: string, data: any) {
-    return this.httpClient.put(`${this.baseUrl}dueaAndQuran/${id}`, data, {
+    return this.httpClient.put(`${this.baseUrl}dueaAndQuran/single/${id}`, data, {
       headers: this.headers,
     });
   }

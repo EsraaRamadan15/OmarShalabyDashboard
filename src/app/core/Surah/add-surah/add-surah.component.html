@@ -28,15 +28,19 @@
                 </mat-label>
                 <span class="col-12">
                   <input name="description" formControlName="description" type="text"
-                    class="form-control form-control-lg" placeholder=" Description" required matInput [(ngModel)]="surah.description" />
+                    class="form-control form-control-lg" placeholder=" Description" required matInput
+                    [(ngModel)]="surah.description" />
                 </span>
                 <mat-error *ngIf="addForm.controls['description'].errors?.['required']">Description required</mat-error>
               </mat-form-field>
             </div>
             <div class="row">
-              <mat-label class="col-lg-5 mb-2 col-form-label required fw-bold fs-6">
-                Surah File
-              </mat-label>
+
+              <audio *ngIf="surah && surah.fileToUpload" controls>
+                <source src="http://localhost:8080/{{surah.fileToUpload}}" type="audio/mpeg">
+
+                Your browser does not support the audio element.
+              </audio>
               <span class="col-12">
                 <input type="file" accept=".mp3" (change)="handleFileInput($event)">
               </span>

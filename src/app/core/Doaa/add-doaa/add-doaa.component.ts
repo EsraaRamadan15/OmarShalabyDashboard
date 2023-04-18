@@ -46,6 +46,7 @@ export class AddDoaaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    
     // const filePath = 'uploads\Tamer Hosny ... Mabatalnash Ehsas - 2020 _ ØªØ§ÙØ± Ø­Ø³ÙÙ ... ÙØ¨Ø·ÙÙØ§Ø´ Ø§Ø­Ø³Ø§Ø³ (320 kbps).mp3-1681691430718... Mabatalnash Ehsas - 2020 _ ØªØ§ÙØ± Ø­Ø³ÙÙ ... ÙØ¨Ø·ÙÙØ§Ø´ Ø§Ø­Ø³Ø§Ø³ (320 kbps).mp3';
     // this.angularFilePath = filePath.replace('\\', '/');
     // this.tt = `http://localhost:8080/${this.angularFilePath}`;
@@ -55,27 +56,20 @@ export class AddDoaaComponent implements OnInit {
       if (param['id']) {
         this.id = param['id']
         this.editMode = !this.editMode;
-
         this.doaService.getDoaaById(this.id).subscribe((res: any) => {
           this.doaa = res;
           const { fileToUpload } = res;
-          console.log("Ewgw: ", fileToUpload)
-
-          this.angularFilePath = fileToUpload.replace(/\\/g, '/');
-
-          console.log("SGRE:G ", this.angularFilePath);
+          this.angularFilePath = fileToUpload.replace(/\\/g, '/');          
           this.path = `http://localhost:8080/${this.angularFilePath}`;
-
-          console.log("ewgjweg: ", this.path);
         })
       }
-    });
+    })
+  
   }
 
 
   addDoaa() {
     const dueData = new FormData()
-    console.log("WEGWEGEGE: " , this.description)
     dueData.append('name', this.name)
     dueData.append("path", this.file)
     dueData.append('type', "due")
