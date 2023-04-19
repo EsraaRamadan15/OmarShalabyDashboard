@@ -84,14 +84,14 @@ export class AddSurahComponent implements OnInit {
             this.refreshData.emit(this.addForm.value);
             this.router.navigate([`dashboard/surahs-list`]);
             this.notificationService.showNotification(
-              'Category Added Successfuly',
+              res.message_en,
               'ok',
               'success'
             );
           },
           (err) => {
             this.notificationService.showNotification(
-              'Category Add Faild',
+              err.error.error_ar ? err.error.error_ar : err.error,
               'ok',
               'error'
             );
@@ -120,7 +120,7 @@ export class AddSurahComponent implements OnInit {
         },
         error: (err: any) => {
           this.notificationService.showNotification(
-            err.error.error_ar ? err.error.error_ar : err.error.error,
+            err.error.error_ar ? err.error.error_ar : err.error,
             'ok',
             'error'
           );
