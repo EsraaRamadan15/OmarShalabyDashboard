@@ -99,9 +99,16 @@ export class AddSurahComponent implements OnInit {
         )
       );
     } else {
-      
-      this.categoryService.editSurah(this.id, formData).subscribe({
-    
+      let data;
+      if (!this.file) {
+        data = {
+          name: this.name, des: this.description, type: "quran", path: this.surah.fileToUpload
+        }
+      } else {
+        data = formData
+      }
+      this.categoryService.editSurah(this.id, data).subscribe({
+
         next: (res: any) => {
           this.refreshData.emit(res.data)
           this.router.navigate([`dashboard/surahs-list`]);

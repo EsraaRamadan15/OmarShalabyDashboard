@@ -46,7 +46,7 @@ export class AddDoaaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
+
     // const filePath = 'uploads\Tamer Hosny ... Mabatalnash Ehsas - 2020 _ ØªØ§ÙØ± Ø­Ø³ÙÙ ... ÙØ¨Ø·ÙÙØ§Ø´ Ø§Ø­Ø³Ø§Ø³ (320 kbps).mp3-1681691430718... Mabatalnash Ehsas - 2020 _ ØªØ§ÙØ± Ø­Ø³ÙÙ ... ÙØ¨Ø·ÙÙØ§Ø´ Ø§Ø­Ø³Ø§Ø³ (320 kbps).mp3';
     // this.angularFilePath = filePath.replace('\\', '/');
     // this.tt = `http://localhost:8080/${this.angularFilePath}`;
@@ -59,12 +59,12 @@ export class AddDoaaComponent implements OnInit {
         this.doaService.getDoaaById(this.id).subscribe((res: any) => {
           this.doaa = res;
           const { fileToUpload } = res;
-          this.angularFilePath = fileToUpload.replace(/\\/g, '/');          
+          this.angularFilePath = fileToUpload.replace(/\\/g, '/');
           this.path = `http://localhost:8080/${this.angularFilePath}`;
         })
       }
     })
-  
+
   }
 
 
@@ -88,7 +88,7 @@ export class AddDoaaComponent implements OnInit {
           },
           error: (err: any) => {
             this.notificationService.showNotification(
-              err.error.error_ar ? err.error.error_ar : err.error.error,
+              err.error.error_ar ? err.error.error_ar : err.error,
               'ok',
               'error'
             );
@@ -97,7 +97,20 @@ export class AddDoaaComponent implements OnInit {
 
       );
     } else {
-      this.doaService.editDoaa(this.id, dueData).subscribe({
+      let data;
+      if (!this.file) {
+        data = {
+          name: this.name,
+          des: this.description,
+          type: "due",
+          path: this.doaa.fileToUpload
+        }
+      } else {
+        data = dueData
+      }
+
+
+      this.doaService.editDoaa(this.id, data).subscribe({
         next: (res: any) => {
           this.refreshData.emit(res.data)
           this.router.navigate([`dashboard/doaa-list`]);
@@ -108,8 +121,10 @@ export class AddDoaaComponent implements OnInit {
           );
         },
         error: (err: any) => {
+          console.log(err);
+
           this.notificationService.showNotification(
-            err.error.error_ar ? err.error.error_ar : err.error.error,
+            err.error.error_ar ? err.error.error_ar : err.error,
             'ok',
             'error'
           );

@@ -45,15 +45,15 @@
 
                 Your browser does not support the audio element.
               </audio>
-              <span class="col-12">
-                <input type="file" accept=".mp3" (change)="handleFileInput($event)" value="path">
+              <span class="col-12" *ngIf="doaa && doaa.fileToUpload">
+                <input   type="file" accept=".mp3" (change)="handleFileInput($event)" value="path" [(ngModel)]="doaa.fileToUpload">
               </span>
             </div>
           </div>
         </div>
       </div>
       <div class="form-footer d-flex justify-content-end">
-        <button [disabled]="!addForm.valid" class="btn btn-dark m-2 p-3 fs-6 cursor-pointer" (click)="addDoaa()">
+        <button  class="btn btn-dark m-2 p-3 fs-6 cursor-pointer"  (click)="addDoaa()">
           {{ editMode ? "Edit" : "Add" }}
         </button>
       </div>
