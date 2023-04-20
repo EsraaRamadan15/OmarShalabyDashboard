@@ -40,20 +40,20 @@
                 Doaa File
               </mat-label>
 
-              <audio *ngIf="doaa && doaa.fileToUpload" controls >
+              <audio *ngIf="doaa && doaa.fileToUpload" controls>
                 <source src="http://localhost:8080/{{doaa.fileToUpload}}" type="audio/mpeg">
 
                 Your browser does not support the audio element.
               </audio>
-              <span class="col-12" *ngIf="doaa && doaa.fileToUpload">
-                <input   type="file" accept=".mp3" (change)="handleFileInput($event)" value="path" [(ngModel)]="doaa.fileToUpload">
+              <span class="col-12">
+                <input type="file" accept=".mp3" (change)="handleFileInput($event)">
               </span>
             </div>
           </div>
         </div>
       </div>
       <div class="form-footer d-flex justify-content-end">
-        <button  class="btn btn-dark m-2 p-3 fs-6 cursor-pointer"  (click)="addDoaa()">
+        <button class="btn btn-dark m-2 p-3 fs-6 cursor-pointer" (click)="addDoaa()">
           {{ editMode ? "Edit" : "Add" }}
         </button>
       </div>
